@@ -5,7 +5,7 @@
 #       Recipes that utilize docker containers assume the existence of the specific docker image existing locally
 
 export JAVA_VER_DISTRO_17 := "17.0.8-zulu"
-export JAVA_VER_DISTRO_20 := "20.0.2-zulu"
+export JAVA_VER_DISTRO_21 := "21-zulu"
 export DOCKER_CMD := "docker container run --rm -it"
 export VOL_NAME := "apache-jena"
 export M2_REPO := "/root/.m2/repository"
@@ -22,9 +22,9 @@ clean-17:
   sdk use java ${JAVA_VER_DISTRO_17}
   mvn clean
 
-clean-20:
+clean-21:
   #!/usr/bin/env bash -l
-  sdk use java ${JAVA_VER_DISTRO_20}
+  sdk use java ${JAVA_VER_DISTRO_21}
   mvn clean
 
 
@@ -35,9 +35,9 @@ clean-install-17: clean-17
   sdk use java ${JAVA_VER_DISTRO_17}
   mvn install
 
-clean-install-20: clean-20
+clean-install-21: clean-21
   #!/usr/bin/env bash -l
-  sdk use java ${JAVA_VER_DISTRO_20}
+  sdk use java ${JAVA_VER_DISTRO_21}
   mvn install
 
 
@@ -48,9 +48,9 @@ verify-17:
   sdk use java ${JAVA_VER_DISTRO_17}
   mvn verify
 
-verify-20:
+verify-21:
   #!/usr/bin/env bash -l
-  sdk use java ${JAVA_VER_DISTRO_20}
+  sdk use java ${JAVA_VER_DISTRO_21}
   mvn verify
 
 
@@ -61,9 +61,9 @@ dev-verify-17:
   sdk use java ${JAVA_VER_DISTRO_17}
   mvn -Pdev verify
 
-dev-verify-20:
+dev-verify-21:
   #!/usr/bin/env bash -l
-  sdk use java ${JAVA_VER_DISTRO_20}
+  sdk use java ${JAVA_VER_DISTRO_21}
   mvn -Pdev verify
 
 
@@ -72,8 +72,8 @@ docker-clean: docker-clean-17
 docker-clean-17:
   ${DOCKER_CMD} -v ${VOL_NAME}-17:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:17" mvn clean
 
-docker-clean-20:
-  ${DOCKER_CMD} -v ${VOL_NAME}-20:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:20" mvn clean
+docker-clean-21:
+  ${DOCKER_CMD} -v ${VOL_NAME}-21:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:21" mvn clean
 
 
 docker-clean-install: docker-clean-install-17
@@ -81,8 +81,8 @@ docker-clean-install: docker-clean-install-17
 docker-clean-install-17: docker-clean-17
   ${DOCKER_CMD} -v ${VOL_NAME}-17:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:17" mvn install
 
-docker-clean-install-20: docker-clean-20
-  ${DOCKER_CMD} -v ${VOL_NAME}-20:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:20" mvn install
+docker-clean-install-21: docker-clean-21
+  ${DOCKER_CMD} -v ${VOL_NAME}-21:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:21" mvn install
 
 
 docker-verify: docker-verify-17
@@ -90,8 +90,8 @@ docker-verify: docker-verify-17
 docker-verify-17:
   ${DOCKER_CMD} -v ${VOL_NAME}-17:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:17" mvn verify
 
-docker-verify-20:
-  ${DOCKER_CMD} -v ${VOL_NAME}-20:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:20" mvn verify
+docker-verify-21:
+  ${DOCKER_CMD} -v ${VOL_NAME}-21:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:21" mvn verify
 
 
 docker-dev-verify: docker-dev-verify-17
@@ -99,16 +99,16 @@ docker-dev-verify: docker-dev-verify-17
 docker-dev-verify-17:
   ${DOCKER_CMD} -v ${VOL_NAME}-17:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:17" mvn -Pdev verify
 
-docker-dev-verify-20:
-  ${DOCKER_CMD} -v ${VOL_NAME}-20:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:20" mvn -Pdev verify
+docker-dev-verify-21:
+  ${DOCKER_CMD} -v ${VOL_NAME}-21:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:21" mvn -Pdev verify
 
 
 dependencies:
   #!/usr/bin/env bash -l
-  sdk use java ${JAVA_VER_DISTRO_11}
+  sdk use java ${JAVA_VER_DISTRO_21}
   mvn dependency:tree -Dscope=compile | tee dependencies.txt
 
 updates:
   #!/usr/bin/env bash -l
-  sdk use java ${JAVA_VER_DISTRO_11}
+  sdk use java ${JAVA_VER_DISTRO_21}
   mvn versions:display-dependency-updates | tee updates.txt
