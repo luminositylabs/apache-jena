@@ -4,8 +4,8 @@
 # NOTE: The just recipes defined below assume sdkman is installed and used for java and maven selection.
 #       Recipes that utilize docker containers assume the existence of the specific docker image existing locally
 
-export JAVA_VER_DISTRO_17 := "17.0.9-zulu"
-export JAVA_VER_DISTRO_21 := "21.0.1-zulu"
+export JAVA_VER_DISTRO_17 := "17.0.10-zulu"
+export JAVA_VER_DISTRO_21 := "21.0.2-zulu"
 export DOCKER_CMD := "docker container run --rm -it"
 export VOL_NAME := "apache-jena"
 export M2_REPO := "/root/.m2/repository"
@@ -33,12 +33,12 @@ clean-install: clean-install-17
 clean-install-17: clean-17
   #!/usr/bin/env bash -l
   sdk use java ${JAVA_VER_DISTRO_17}
-  mvn install
+  mvn install -Dmaven.javadoc.skip=true
 
 clean-install-21: clean-21
   #!/usr/bin/env bash -l
   sdk use java ${JAVA_VER_DISTRO_21}
-  mvn install
+  mvn install -Dmaven.javadoc.skip=true
 
 
 verify: verify-17
