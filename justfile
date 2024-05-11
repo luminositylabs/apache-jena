@@ -10,7 +10,7 @@ export DOCKER_CMD := "docker container run --rm -it"
 export VOL_NAME := "apache-jena"
 export M2_REPO := "/root/.m2/repository"
 export BLD_DIR := "/usr/src/build"
-export IMG := "llsem-ubuntu-maven"
+export IMG := "ghcr.io/luminositylabs/llsem-ubuntu-maven"
 
 default:
   @echo "Invoke just --list to see a list of possible recipes to run"
@@ -79,28 +79,28 @@ docker-clean-21:
 docker-clean-install: docker-clean-install-17
 
 docker-clean-install-17: docker-clean-17
-  ${DOCKER_CMD} -v ${VOL_NAME}-17:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:17" mvn install
+  ${DOCKER_CMD} -v ${VOL_NAME}-17:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:17" mvn -Djena-fuseki-ui.e2e.test.skip=true install
 
 docker-clean-install-21: docker-clean-21
-  ${DOCKER_CMD} -v ${VOL_NAME}-21:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:21" mvn install
+  ${DOCKER_CMD} -v ${VOL_NAME}-21:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:21" mvn -Djena-fuseki-ui.e2e.test.skip=true install
 
 
 docker-verify: docker-verify-17
 
 docker-verify-17:
-  ${DOCKER_CMD} -v ${VOL_NAME}-17:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:17" mvn verify
+  ${DOCKER_CMD} -v ${VOL_NAME}-17:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:17" mvn -Djena-fuseki-ui.e2e.test.skip=true verify
 
 docker-verify-21:
-  ${DOCKER_CMD} -v ${VOL_NAME}-21:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:21" mvn verify
+  ${DOCKER_CMD} -v ${VOL_NAME}-21:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:21" mvn -Djena-fuseki-ui.2e2.test.skip=true verify
 
 
 docker-dev-verify: docker-dev-verify-17
 
 docker-dev-verify-17:
-  ${DOCKER_CMD} -v ${VOL_NAME}-17:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:17" mvn -Pdev verify
+  ${DOCKER_CMD} -v ${VOL_NAME}-17:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:17" mvn -Pdev -Djena-fuseki-ui.e2e.test.skip=true verify
 
 docker-dev-verify-21:
-  ${DOCKER_CMD} -v ${VOL_NAME}-21:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:21" mvn -Pdev verify
+  ${DOCKER_CMD} -v ${VOL_NAME}-21:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:21" mvn -Pdev -Djena-fuseki-ui.e2e.test.skip=true verify
 
 
 dependencies:

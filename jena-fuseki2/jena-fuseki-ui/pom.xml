@@ -33,10 +33,12 @@
         <yarn.version>v1.22.17</yarn.version>
         <automatic.module.name>org.apache.jena.fuseki.ui</automatic.module.name>
 
-        <!-- 
+        <jena-fuseki-ui.e2e.test.skip>false</jena-fuseki-ui.e2e.test.skip>
+
+        <!--
              Allow for skipping the tests.
-             The test frameworks need various software compoents to 
-             be available on the host running maven. This isn't always 
+             The test frameworks need various software compoents to
+             be available on the host running maven. This isn't always
              practical. This property allows the UI to be built on such machines
              by skipping the tests.
              It is set "true" by profile "ui-skip-tests"
@@ -134,6 +136,7 @@
                                 <FUSEKI_PORT>${org.apache.jena.fuseki.port}</FUSEKI_PORT>
                             </environmentVariables>
                             <arguments>run test:e2e</arguments>
+                            <skip>${jena-fuseki-ui.e2e.test.skip}</skip>
                         </configuration>
                     </execution>
                 </executions>
